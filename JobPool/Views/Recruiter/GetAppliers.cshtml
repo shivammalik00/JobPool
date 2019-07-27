@@ -1,0 +1,50 @@
+﻿@model IEnumerable<JobPool.Models.JobApplied>
+@{
+    ViewBag.Title = "GetAppliers";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+
+<div class="unit-5 overlay" style="background-image: url('/images/hero_1.jpg');">
+    <div class="container text-center">
+        <h2 class="mb-0">Appliers List</h2>
+        <p class="mb-0 unit-6">@Html.ActionLink("Home ", "DashBoard", "Recruiter")<span class="sep">></span> <span>Appliers List</span></p>
+    </div>
+</div>
+
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="mb-5 h3">Appliers List</h2>
+                <div class="rounded border jobs-wrap">
+
+                    @foreach (var job in Model)
+                    {
+                        <div class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
+                            <div class="company-logo blank-logo text-center text-md-left pl-3">
+                                <img src="/images/company_logo_blank.png" alt="Image" class="img-fluid mx-auto">
+                            </div>
+                            <div class="job-details h-100">
+                                <div class="p-3 align-self-center">
+                                    <h3>@job.JobApplier.FirstName @job.JobApplier.LastName</h3>
+                                    <div class="d-block d-lg-flex">
+                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span>@job.JobApplier.HighestQualification</div>
+                                        <div class="mr-3"><span class="icon-room mr-1"></span>@job.JobApplier.Location</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-category align-self-center">
+                                <div class="p-4">
+                                    <span class="text-info p-2 rounded border border-info" style="margin-right:70px;"><a href="@Url.Action("ApplierDetails", "Recruiter", new { userId = job.JobApplier.Id , jobId = job.PostedJobId })">Details</a></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

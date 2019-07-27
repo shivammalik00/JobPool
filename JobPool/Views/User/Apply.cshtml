@@ -1,0 +1,131 @@
+﻿@model JobPool.Models.PostedJob
+@{
+    ViewBag.Title = "Apply";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+
+<div class="unit-5 overlay" style="background-image: url('/images/hero_1.jpg');">
+    <div class="container text-center">
+        <p class="mb-0 unit-6">@Html.ActionLink("Home ", "index", "User") <span class="sep">></span> <span>Job Apply</span></p>
+
+    </div>
+</div>
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-lg-8 mb-5">
+
+
+
+                <div class="p-5 bg-white">
+
+                    <div class="mb-4 mb-md-5 mr-5">
+                        <div class="job-post-item-header d-flex align-items-center">
+                            <h2 class="mr-3 text-black h4">@Model.JobTitle</h2>
+                            <div class="badge-wrap">
+                                <span class="border border-warning text-warning py-2 px-4 rounded">@Model.TypeOfJob_ID</span>
+                            </div>
+                        </div>
+                        <div class="job-post-item-body d-block d-md-flex">
+                            <div><span class="fl-bigmug-line-big104"></span> <span>@Model.City</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Description</h3>
+                        <p>
+                            @Model.Description
+                        </p>
+                    </div>
+                    <div>
+                        <h4>Skills Required</h4>
+                        <span>
+                            @Model.Skill
+                        </span>
+                    </div>
+                    <div>
+                        <h4>Designation</h4>
+                        <span>
+                            @Model.Designation
+                        </span>
+                    </div>
+                    <div>
+                        <h4>Experience Required</h4>
+                        <span>
+                            @Model.experience
+                        </span>
+                    </div>
+                    <div>
+                        <h4>Expected Salary</h4>
+                        <span>
+                            @Model.salary
+                        </span>
+                    </div>
+                    <div>
+                        <h4>Last Date To Apply</h4>
+                        <span>
+                            @Model.ValidTill
+                        </span>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-4">
+
+
+                <div class="p-4 mb-3 bg-white">
+                    @*<h3 class="h5 text-black mb-3">Company Info</h3>*@
+                    <h5>Company Name</h5>
+                    <span>
+                        @Model.User.CompanyName
+                    </span>
+                    <h5>Address</h5>
+                    <span>
+                        @Model.User.CompanyAddress
+                    </span>
+                    <h5>Contact Details</h5>
+                    <span>
+                        @Model.User.Email <br>
+                        @Model.User.MobileNumber
+                    </span>
+                    <button data-job-id="@Model.Id" id="applyId" class="btn btn-primary  py-2 px-4">Apply Job</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#applyId").click(function (e) {
+                var button = $(e.target);
+                $.ajax({
+                    url: '@Url.Action("ApplyById")?id='+button.attr("data-job-id"),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.message == "SuccessFully Applied") {
+                            button
+                                .removeClass("btn-primary")
+                                .addClass("btn-info")
+                                .text("Applied");
+                        }
+                        else {
+                            bootbox.alert("Already Applied");
+                        }
+                    },
+                    error: function (data) {
+                        alert("some error");
+                    }
+                });               
+            });
+        });
+    </script>
+}
+
+
+
+
+
